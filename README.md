@@ -8,12 +8,11 @@ The derivation of the shell vertices is found in this [excellent paper by Jorge 
 
 To run this, you need [Processing](http://www.processing.org) installed. Confirmed working on 3.5.3. 
 
-It requires HE_Mesh, PeasyCam, and COntrolP5. To install these libraries open up processing and go to:
+It requires HE_Mesh, PeasyCam, and ControlP5. To install these libraries open up processing and go to:
 
 
 ```
 Sketch > Import Libraries > Add Libraries...
-
 ```
 Then search for them.
 
