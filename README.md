@@ -6,9 +6,17 @@ The derivation of the shell vertices is found in this [excellent paper by Jorge 
 
 ## Usage
 
-To run this, you need [Processing](http://www.processing.org) installed. Confirmed working on 1.5.1, untested but probably fine on 2.0.  
+To run this, you need [Processing](http://www.processing.org) installed. Confirmed working on 3.5.3. 
 
-It requires [Hemesh](http://hemesh.wblut.com/2011/09/19/he_mesh-a-3d-library-for-processing/) , [PeasyCam](http://mrfeinberg.com/peasycam/) , and [ControlP5](http://www.sojamo.de/libraries/controlP5/) libraries to run, although they are bundled inside the "code" folder so you don't need to install them if you don't already have them.
+It requires HE_Mesh, PeasyCam, and COntrolP5. To install these libraries open up processing and go to:
+
+
+```
+Sketch > Import Libraries > Add Libraries...
+
+```
+Then search for them.
+
 
 ## Instructions
 

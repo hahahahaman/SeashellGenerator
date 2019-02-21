@@ -15,15 +15,19 @@
 
 import peasy.*;
 import controlP5.*;
-import wblut.hemesh.creators.*;
-import wblut.core.processing.*;
-import wblut.hemesh.core.*;
+import wblut.math.*;
+import wblut.hemesh.*;
+import wblut.core.*;
+import wblut.geom.*;
+import wblut.processing.*;
 import processing.opengl.*;
 
-ControlP5 gui;
-PeasyCam cam;
 HE_Mesh mesh;
 WB_Render render;
+//ControlFrame cf;
+
+public ControlP5 gui;
+public PeasyCam cam;
 
 PVector[] spiral;
 PVector[][] shell;
@@ -36,38 +40,47 @@ int r3x = 512;  int r3y = 96;
 
 int mode = 1;    // 0 = live, 1 = normal, 2 = hi-res
 
+void settings(){
+   size(displayWidth, displayHeight, P3D);
+}
+
 void setup() {
-  size(screenWidth, screenHeight, OPENGL);
+   println("setup");
   render = new WB_Render(this);
-  setupGUI();
-  
-  // set up camera
   cam = new PeasyCam(this, 600);
   cam.setMinimumDistance(10);
-  cam.setMaximumDistance(2500);
+  cam.setMaximumDistance(10000);
+
+  surface.setLocation(10,10);
+  
+  setup_gui();
+  //cf = new ControlFrame(this, displayWidth, displayHeight, "controls");
 
   PreciousWentleTrap();
 }
 
 void draw() {
-  background(0);    
-
-  cam.beginHUD();
-    pushStyle();
-    noFill();
-    stroke(255,220);
-    rect(GUI_SPIRAL_X-5, GUI_SPIRAL_Y-4, 165, (GUI_COIL_Y - GUI_SPIRAL_Y + 80));
-    rect(GUI_MODE_X-5, GUI_MODE_Y-4, 265, (GUI_PRESETS_Y - GUI_MODE_Y + 50));
-    popStyle();
-    gui.draw();
-  cam.endHUD(); 
-
-  pushMatrix();
-    directionalLight(0, 0, 500, width/2, height/2, 0);
-    if (mode==0)     makeMesh(r0x, r0y);  
-    if (renderSpine) drawSpine();
-    if (renderMesh)  drawMesh();   
-  popMatrix();
+    background(0);    
+    
+    // Don't want the camera to move when using the GUI.
+    cam.setActive(!gui.isMouseOver());
+    
+    cam.beginHUD(); // Ensures GUI doesn't move with the camera.
+      pushStyle();
+      noFill();
+      stroke(255,220);
+      rect(GUI_SPIRAL_X-5, GUI_SPIRAL_Y-4, 165, (GUI_COIL_Y - GUI_SPIRAL_Y + 80));
+      rect(GUI_MODE_X-5, GUI_MODE_Y-4, 265, (GUI_PRESETS_Y - GUI_MODE_Y + 50));
+      popStyle();
+      gui.draw();
+    cam.endHUD(); 
+  
+    pushMatrix();
+      directionalLight(0, 0, 500, width/2, height/2, 0);
+      if (mode==0)     makeMesh(r0x, r0y);  
+      if (renderSpine) drawSpine();
+      if (renderMesh)  drawMesh();   
+    popMatrix();
 }
 
 void makeMesh(int n, int m) {
@@ -83,7 +96,7 @@ void makeMesh() {
 
 void export() {
   String filename = "export/" + gui.get(Textfield.class,"meshName").getText() + ".stl";
-  HET_Export.saveToSTL(mesh, sketchPath(filename), 1.0);
+  HET_Export.saveToSTL(mesh, sketchPath(filename), "1.0");
 }
 
 void export_hi_res() {

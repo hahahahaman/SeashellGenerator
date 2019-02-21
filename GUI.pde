@@ -42,143 +42,146 @@ int GUI_COLORS_X = 10;          int GUI_COLORS_Y = 110;
 int GUI_PRESETS_X = 10;         int GUI_PRESETS_Y = 210;
 
 
-void setupGUI() 
-{
-  gui = new ControlP5(this);
-  gui.setAutoDraw(false);
-  gui.setFont(createFont("Georgia", 11), 11);
+void setup_gui(){
 
-  // labels
-  gui.addTextlabel("spiral")       .setText("Spiral") 
-      .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y)  
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("ellipseRadii") .setText("Ellipse radii") 
-      .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("orientation")  .setText("Orientation") 
-      .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("surface")      .setText("Surface") 
-      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("coil_")     .setText("Coil") 
-      .setPosition(GUI_COIL_X, GUI_COIL_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("presetslabel") .setText("Presets") 
-      .setPosition(GUI_PRESETS_X, GUI_PRESETS_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("colors") .setText("Color") 
-      .setPosition(GUI_COLORS_X, GUI_COLORS_Y) 
-      .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
-  gui.addTextlabel("livemode") .setText("Mode") 
-      .setPosition(GUI_MODE_X, GUI_MODE_Y) 
-      .setColorValue(0xffffff00);
+    gui = new ControlP5(this);
+    gui.setAutoDraw(false);
+    gui.setFont(createFont("Georgia", 11), 11);
+  
+    // labels
+    gui.addTextlabel("spiral")       .setText("Spiral") 
+        .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y)  
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("ellipseRadii") .setText("Ellipse radii") 
+        .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("orientation")  .setText("Orientation") 
+        .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("surface")      .setText("Surface") 
+        .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("coil_")     .setText("Coil") 
+        .setPosition(GUI_COIL_X, GUI_COIL_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("presetslabel") .setText("Presets") 
+        .setPosition(GUI_PRESETS_X, GUI_PRESETS_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("colors") .setText("Color") 
+        .setPosition(GUI_COLORS_X, GUI_COLORS_Y) 
+        .setColorValue(0xffffff00) .setFont(createFont("Georgia",12));
+    gui.addTextlabel("livemode") .setText("Mode") 
+        .setPosition(GUI_MODE_X, GUI_MODE_Y) 
+        .setColorValue(0xffffff00);
+        
+    // bang to update mesh
+    gui.addBang("bang")  .setPosition(GUI_UPDATE_X, GUI_UPDATE_Y)  
+        .setSize(40, 40)  .setTriggerEvent(Bang.RELEASE)  .setLabel("update");
+  
+    // spiral
+    gui.addSlider("turns")   .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+15)     .setRange(1, 10 * TWO_PI)   ;
+    gui.addSlider("A")       .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+30)        .setRange(0, 100)           ;
+    gui.addSlider("alpha")   .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+45)        .setRange(0, PI)            ;
+    gui.addSlider("beta")    .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+60)        .setRange(-PI, PI)          ;
+    gui.addSlider("k")       .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+75)        .setRange(0, 2)             ;
+  
+    // ellipse radius
+    gui.addSlider("a")       .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y+15)       .setRange(0, 50)      ;
+    gui.addSlider("b")       .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y+30)       .setRange(0, 50)      ;
+  
+    // ellipse orientation
+    gui.addSlider("mu")      .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+15)       .setRange(0, TWO_PI)  ;
+    gui.addSlider("omega")   .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+30)       .setRange(0, TWO_PI)  ;
+    gui.addSlider("phi")     .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+45)       .setRange(-PI, PI)    ;
+  
+    // surface
+    gui.addSlider("L")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+15)       .setRange(0, 5)       ;
+    gui.addSlider("P")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+30)       .setRange(0, 5)       ;
+    gui.addSlider("W1")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+45)       .setRange(-5, 5)      ;
+    gui.addSlider("W2")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+60)       .setRange(-10, 10)    ;
+    gui.addSlider("N")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+75)       .setRange(-10, 10)    .setNumberOfTickMarks(10);
+  
+    // coil parameter
+    gui.addRadioButton("coil")
+       .setPosition(GUI_COIL_X, GUI_COIL_Y+15)
+       .setSize(20,20)
+       .setColorForeground(color(120))
+       .setColorActive(color(255))
+       .setColorLabel(color(255))
+       .setItemsPerRow(1)
+       .addItem("dextral",1)
+       .addItem("sinistral",2);
+  
+    // presets
+    String[] presetNames = new String[] {
+      "BoatEarMoon", "HorseConch", "Troques", "Cone", 
+      "PreciousWentleTrap", "NeptuneCarved", "Ancilla", 
+      "Conch", "Barrell", "OstrichFoot", "SerpentineConch", "Lapa", 
+      "SnailShell", "ShellHelmetHungarian" };
+   
+    ScrollableList presets =
+    gui.addScrollableList("dropdown")
+       .setType(ControlP5.DROPDOWN)
+       .setPosition(GUI_PRESETS_X, GUI_PRESETS_Y+30)
+       .setItemHeight(20)
+       .setBarHeight(15)
+       .setWidth(200)
+       .setColorBackground(color(60))
+       .setColorActive(color(255, 128))
+       .addItems(presetNames)
+    ;
+    presets.getCaptionLabel().set("presets");
+    presets.getCaptionLabel().getStyle().marginTop = 3;
+    presets.getCaptionLabel().getStyle().marginLeft = 3;
+    presets.getValueLabel().getStyle().marginTop = 3;
+
+  
+    // color picker
+    gui.addColorPicker("picker")  
+       .setPosition(GUI_COLORS_X, GUI_COLORS_Y+15)
+       .setColorValue(color(255, 128, 0, 128));
+  
+    // live mode
+    gui.addRadioButton("mode")
+       .setPosition(GUI_MODE_X, GUI_MODE_Y+15)
+       .setSize(20,20)
+       .setColorForeground(color(120))
+       .setColorActive(color(255))
+       .setColorLabel(color(255))
+       .setItemsPerRow(1)
+       .addItem("live",0)
+       .addItem("normal",1)
+       .addItem("hi-res (slow)",2);
+   
+    // wireframe toggle
+    gui.addCheckBox("wire")
+      .setPosition(GUI_WIREFRAME_X, GUI_WIREFRAME_Y)
+      .setColorForeground(color(120))
+      .setColorActive(color(255))
+      .setColorLabel(color(255))
+      .setSize(30, 30)
+      .setItemsPerRow(3)
+      .setSpacingColumn(50)
+      .setSpacingRow(20)
+      .addItem("wireframe", 0);
       
-  // bang to update mesh
-  gui.addBang("bang")  .setPosition(GUI_UPDATE_X, GUI_UPDATE_Y)  
-      .setSize(40, 40)  .setTriggerEvent(Bang.RELEASE)  .setLabel("update");
-
-  // spiral
-  gui.addSlider("turns")   .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+15)        .setRange(0, 10 * TWO_PI)   .setAutoUpdate(true);
-  gui.addSlider("A")       .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+30)        .setRange(0, 100)           .setAutoUpdate(true);
-  gui.addSlider("alpha")   .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+45)        .setRange(0, PI)            .setAutoUpdate(true);
-  gui.addSlider("beta")    .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+60)        .setRange(-PI, PI)          .setAutoUpdate(true);
-  gui.addSlider("k")       .setPosition(GUI_SPIRAL_X, GUI_SPIRAL_Y+75)        .setRange(0, 2)             .setAutoUpdate(true);
-
-  // ellipse radius
-  gui.addSlider("a")       .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y+15)       .setRange(0, 50)      .setAutoUpdate(true);
-  gui.addSlider("b")       .setPosition(GUI_ELLIPSE_X, GUI_ELLIPSE_Y+30)       .setRange(0, 50)      .setAutoUpdate(true);
-
-  // ellipse orientation
-  gui.addSlider("mu")      .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+15)       .setRange(0, TWO_PI)  .setAutoUpdate(true);
-  gui.addSlider("omega")   .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+30)       .setRange(0, TWO_PI)  .setAutoUpdate(true);
-  gui.addSlider("phi")     .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+45)       .setRange(-PI, PI)    .setAutoUpdate(true);
-
-  // surface
-  gui.addSlider("L")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+15)       .setRange(0, 5)       .setAutoUpdate(true);
-  gui.addSlider("P")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+30)       .setRange(0, 5)       .setAutoUpdate(true);
-  gui.addSlider("W1")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+45)       .setRange(-5, 5)      .setAutoUpdate(true);
-  gui.addSlider("W2")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+60)       .setRange(-10, 10)    .setAutoUpdate(true);
-  gui.addSlider("N")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+75)       .setRange(-10, 10)    .setAutoUpdate(true)   .setNumberOfTickMarks(10);
-
-  // coil parameter
-  gui.addRadioButton("coil")
-     .setPosition(GUI_COIL_X, GUI_COIL_Y+15)
-     .setSize(20,20)
-     .setColorForeground(color(120))
-     .setColorActive(color(255))
-     .setColorLabel(color(255))
-     .setItemsPerRow(1)
-     .addItem("dextral",1)
-     .addItem("sinistral",2);
-
-  // presets
-  String[] presetNames = new String[] {
-    "BoatEarMoon", "HorseConch", "Troques", "Cone", 
-    "PreciousWentleTrap", "NeptuneCarved", "Ancilla", 
-    "Conch", "Barrell", "OstrichFoot", "SerpentineConch", "Lapa", 
-    "SnailShell", "ShellHelmetHungarian" };
-
-  DropdownList presets = gui.addDropdownList("list-presets");
-    presets.setPosition(GUI_PRESETS_X, GUI_PRESETS_Y+30);
-    for (int i = 0; i < presetNames.length; i++)
-      presets.addItem(presetNames[i], i);
-    presets.captionLabel().set("presets");
-    presets.setItemHeight(20);
-    presets.setBarHeight(15);
-    presets.setWidth(200);
-    presets.captionLabel().style().marginTop = 3;
-    presets.captionLabel().style().marginLeft = 3;
-    presets.valueLabel().style().marginTop = 3;
-    presets.setColorBackground(color(60));
-    presets.setColorActive(color(255, 128));
-
-  // color picker
-  gui.addColorPicker("picker")  
-     .setPosition(GUI_COLORS_X, GUI_COLORS_Y+15)
-     .setColorValue(color(255, 128, 0, 128));
-
-  // live mode
-  gui.addRadioButton("mode")
-     .setPosition(GUI_MODE_X, GUI_MODE_Y+15)
-     .setSize(20,20)
-     .setColorForeground(color(120))
-     .setColorActive(color(255))
-     .setColorLabel(color(255))
-     .setItemsPerRow(1)
-     .addItem("live",0)
-     .addItem("normal",1)
-     .addItem("hi-res (slow)",2);
- 
-  // wireframe toggle
-  gui.addCheckBox("wire")
-    .setPosition(GUI_WIREFRAME_X, GUI_WIREFRAME_Y)
-    .setColorForeground(color(120))
-    .setColorActive(color(255))
-    .setColorLabel(color(255))
-    .setSize(30, 30)
-    .setItemsPerRow(3)
-    .setSpacingColumn(50)
-    .setSpacingRow(20)
-    .addItem("wireframe", 0);
-    
-  // export to STL
-  PFont font = createFont("arial",12);
-  gui.addTextfield("meshName")
-   .setPosition(width-120,10)
-   .setSize(100,20)
-   .setText("MyShell")
-   .setFont(font)
-   .setFocus(true)
-   .setColor(color(255,0,0));
-
-  gui.addBang("export")
-    .setPosition(width-120, 60)
-    .setSize(40, 40);
-
-  gui.addBang("export_hi_res")
-    .setPosition(width-120, 130)
-    .setSize(40, 40);
+    // export to STL
+    PFont font = createFont("arial",12);
+    gui.addTextfield("meshName")
+     .setPosition(width-120,10)
+     .setSize(100,20)
+     .setText("MyShell")
+     .setFont(font)
+     .setFocus(true)
+     .setColor(color(255,255,255));
+  
+    gui.addBang("export")
+      .setPosition(width-120, 60)
+      .setSize(40, 40);
+  
+    gui.addBang("export_hi_res")
+      .setPosition(width-120, 130)
+      .setSize(40, 40);
 }
 
 // color picker
@@ -205,32 +208,54 @@ void controlEvent(ControlEvent theEvent) {
      else if (mode==2) makeMesh(r2x, r2y);
   }
   else if (theEvent.isGroup()) {
+    println("group");
     if (theEvent.getGroup().getName().equals("wire")) {
       if (theEvent.getGroup().getValue() == 0) {
         meshFill = !meshFill;
       }
     }
-    else if (theEvent.getGroup().getName().equals("list-presets")) {
-      int idxPreset = (int) theEvent.getGroup().getValue();
-      if      (idxPreset== 0) BoatEarMoon();
-      else if (idxPreset== 1) HorseConch();
-      else if (idxPreset== 2) Turitella();
-      else if (idxPreset== 3) Troques();
-      else if (idxPreset== 4) Cone();
-      else if (idxPreset== 5) PreciousWentleTrap();
-      else if (idxPreset== 6) NeptuneCarved();
-      else if (idxPreset== 7) Ancilla();
-      else if (idxPreset== 8) Oliva();
-      else if (idxPreset== 9) Conch();
-      else if (idxPreset==10) Barrell();
-      else if (idxPreset==11) OstrichFoot();
-      else if (idxPreset==12) SerpentineConch();
-      else if (idxPreset==13) SerpentineConch();
-      else if (idxPreset==14) Lapa();
-      else if (idxPreset==15) SnailShell();
-      else if (idxPreset==16) ShellHelmetHungarian();
-    }
   }
+}
+
+void dropdown(int n){
+  if      (n== 0) BoatEarMoon();
+  else if (n== 1) HorseConch();
+  else if (n== 2) Turitella();
+  else if (n== 3) Troques();
+  else if (n== 4) Cone();
+  else if (n== 5) PreciousWentleTrap();
+  else if (n== 6) NeptuneCarved();
+  else if (n== 7) Ancilla();
+  else if (n== 8) Oliva();
+  else if (n== 9) Conch();
+  else if (n==10) Barrell();
+  else if (n==11) OstrichFoot();
+  else if (n==12) SerpentineConch();
+  else if (n==13) SerpentineConch();
+  else if (n==14) Lapa();
+  else if (n==15) SnailShell();
+  else if (n==16) ShellHelmetHungarian();
+
+  gui.getController("A").setValue(A);
+  gui.getController("alpha").setValue(alpha);
+  gui.getController("beta").setValue(beta);
+
+  // ellipse radius
+  gui.getController("a").setValue(a);
+  gui.getController("b").setValue(b);
+
+  // ellipse orientation
+  gui.getController("mu").setValue(mu);
+  gui.getController("omega").setValue(omega);
+  gui.getController("phi").setValue(phi);
+
+  // surface
+  gui.getController("L").setValue(L);
+  gui.getController("P").setValue(P);
+  gui.getController("W1").setValue(W1);
+  gui.getController("W2").setValue(W2);
+  gui.getController("N").setValue(N);
+  
 }
 
 void keyPressed() {
@@ -238,4 +263,3 @@ void keyPressed() {
     makeMesh();
   }
 }
-
