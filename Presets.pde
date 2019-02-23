@@ -1,3 +1,25 @@
+// presets
+String[] presetNames = new String[] {
+      "BoatEarMoon",
+      "HorseConch",
+      "Turitella",
+      "Troques",
+      "Cone", 
+      "PreciousWentleTrap",
+      "NeptuneCarved",
+      "Ancilla", 
+      "Oliva",
+      "Conch",
+      "Barrell",
+      "OstrichFoot",
+      "SerpentineConch",
+      "Lapa", 
+      "SnailShell",
+      "ShellHelmetHungarian",
+      "Tonel",
+      "Argonauta"
+    };
+
 void BoatEarMoon() {
   D=1; alpha=radians(83); beta=radians(42); phi=radians(70); mu=radians(10); omega=radians(30); A=25; a=12; b=20; L=0; P=0; W1=0; W2=0; N=0;
   if (mode==0) makeMesh(r0x, r0y); else if (mode==1) makeMesh(r1x, r1y); else if (mode==2) makeMesh(r2x, r2y);
@@ -61,4 +83,12 @@ void SnailShell() {
 void ShellHelmetHungarian() {
   D=1; alpha=radians(43); beta=radians(50); phi=radians(-10); mu=radians(1); omega=radians(-30); A=9; a=8; b=7; L=0; P=0; W1=0; W2=0; N=0;
   if (mode==0) makeMesh(r0x, r0y); else if (mode==1) makeMesh(r1x, r1y); else if (mode==2) makeMesh(r2x, r2y);
+}
+void Tonel(){
+  D=1; alpha=radians(82); beta=radians(2); phi=radians(-56); mu=radians(1); omega=radians(10); A=46; a=38; b=45; L=0; P=0; W1=0; W2=0; N=0;
+  if (mode==0) makeMesh(r0x, r0y); else if (mode==1) makeMesh(r1x, r1y); else if (mode==2) makeMesh(r2x, r2y);
+}
+void Argonauta(){
+   D=1; alpha=radians(80); beta=radians(90); phi=radians(0); mu=radians(0); omega=radians(0); A=2; a=2; b=1.5; L=0.3; P=5; W1=150; W2=20; N=30;
+   if (mode==0) makeMesh(r0x, r0y); else if (mode==1) makeMesh(r1x, r1y); else if (mode==2) makeMesh(r2x, r2y);
 }

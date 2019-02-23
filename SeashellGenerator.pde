@@ -47,7 +47,7 @@ void settings(){
 void setup() {
    println("setup");
   render = new WB_Render(this);
-  cam = new PeasyCam(this, 600);
+  cam = new PeasyCam(this, 1000);
   cam.setMinimumDistance(10);
   cam.setMaximumDistance(10000);
 

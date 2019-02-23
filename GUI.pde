@@ -95,11 +95,11 @@ void setup_gui(){
     gui.addSlider("phi")     .setPosition(GUI_ORIENTATION_X, GUI_ORIENTATION_Y+45)       .setRange(-PI, PI)    ;
   
     // surface
-    gui.addSlider("L")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+15)       .setRange(0, 5)       ;
-    gui.addSlider("P")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+30)       .setRange(0, 5)       ;
-    gui.addSlider("W1")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+45)       .setRange(-5, 5)      ;
-    gui.addSlider("W2")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+60)       .setRange(-10, 10)    ;
-    gui.addSlider("N")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+75)       .setRange(-10, 10)    .setNumberOfTickMarks(10);
+    gui.addSlider("L")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+15)       .setRange(0, 10)       ;
+    gui.addSlider("P")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+30)       .setRange(0, 10)       ;
+    gui.addSlider("W1")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+45)       .setRange(-200, 200)      ;
+    gui.addSlider("W2")      .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+60)       .setRange(-100, 100)    ;
+    gui.addSlider("N")       .setPosition(GUI_SURFACE_X, GUI_SURFACE_Y+75)       .setRange(-50, 50)    .setNumberOfTickMarks(10);
   
     // coil parameter
     gui.addRadioButton("coil")
@@ -112,13 +112,6 @@ void setup_gui(){
        .addItem("dextral",1)
        .addItem("sinistral",2);
   
-    // presets
-    String[] presetNames = new String[] {
-      "BoatEarMoon", "HorseConch", "Troques", "Cone", 
-      "PreciousWentleTrap", "NeptuneCarved", "Ancilla", 
-      "Conch", "Barrell", "OstrichFoot", "SerpentineConch", "Lapa", 
-      "SnailShell", "ShellHelmetHungarian" };
-   
     ScrollableList presets =
     gui.addScrollableList("dropdown")
        .setType(ControlP5.DROPDOWN)
@@ -217,6 +210,7 @@ void controlEvent(ControlEvent theEvent) {
   }
 }
 
+// Somehow this function is called when the ScrollableList is used
 void dropdown(int n){
   if      (n== 0) BoatEarMoon();
   else if (n== 1) HorseConch();
@@ -231,11 +225,13 @@ void dropdown(int n){
   else if (n==10) Barrell();
   else if (n==11) OstrichFoot();
   else if (n==12) SerpentineConch();
-  else if (n==13) SerpentineConch();
-  else if (n==14) Lapa();
-  else if (n==15) SnailShell();
-  else if (n==16) ShellHelmetHungarian();
-
+  else if (n==13) Lapa();
+  else if (n==14) SnailShell();
+  else if (n==15) ShellHelmetHungarian();
+  else if (n==16) Tonel();
+  else if (n==17) Argonauta();
+  
+  // set all the controller values to the preset values
   gui.getController("A").setValue(A);
   gui.getController("alpha").setValue(alpha);
   gui.getController("beta").setValue(beta);
@@ -260,6 +256,8 @@ void dropdown(int n){
 
 void keyPressed() {
   if (key==' ') {
-    makeMesh();
+     if      (mode==0) makeMesh(r0x, r0y); 
+     else if (mode==1) makeMesh(r1x, r1y); 
+     else if (mode==2) makeMesh(r2x, r2y);
   }
 }
