@@ -252,12 +252,12 @@ void dropdown(int n){
   gui.getController("W2").setValue(W2);
   gui.getController("N").setValue(N);
   
+  makeMesh();
+  
 }
 
 void keyPressed() {
   if (key==' ') {
-     if      (mode==0) makeMesh(r0x, r0y); 
-     else if (mode==1) makeMesh(r1x, r1y); 
-     else if (mode==2) makeMesh(r2x, r2y);
+     makeMesh();
   }
 }

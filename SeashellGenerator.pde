@@ -96,6 +96,7 @@ void makeMesh() {
 
 void export() {
   String filename = "export/" + gui.get(Textfield.class,"meshName").getText() + ".stl";
+  mesh.triangulate();
   HET_Export.saveToSTL(mesh, sketchPath(filename), "1.0");
 }
 
